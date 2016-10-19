@@ -165,42 +165,45 @@ public class StringSequence {
                 if (this.position == null) {
                     this.position = result;
                     this.shift = shift;
-                //    this.shift = this.length-shift;
                 }
                 else if (this.position.compareTo(result) == 1) {
                     this.position = result;
                     this.shift = shift;
-                //    this.shift = this.length-shift;
                 }
             }
         }
     }
 
     public void twoMum(int step, int shift) {
-        if (this.sequence[0] == this.sequence[this.length-1]) {
-            int extSequence[] = new int[this.length+shift];
+        if (this.sequence[shift] == this.sequence[this.length-1]) {
 
-            System.arraycopy(this.sequence, 0, extSequence, 0, this.length);
+        step = this.length - shift - 1;
 
-            extSequence[this.length - 1 + shift] = this.sequence[shift] + 1;
+            for (int ext = 1; ext < (this.length - 1); ext++) {
+                int extSequence[] = new int[this.length+ext];
 
-            for (int i = shift - 1; i > 0; i--) {
-                extSequence[this.length + i - 1] = this.sequence[i] + extSequence[this.length + i]/10;
-                extSequence[this.length + i] = extSequence[this.length + i]%10;
-            }
+                System.arraycopy(this.sequence, 0, extSequence, 0, this.length);
 
-            extSequence[this.length - 1 + shift] = extSequence[this.length - 1 + shift]%10;
-
-            StringSequence extendedSequence = new StringSequence(extSequence);
-
-            if (extendedSequence.someSequence(step, shift+1) == true) {
-                if (this.position == null) {
-                    this.position = extendedSequence.position;
-                    this.shift = extendedSequence.shift;
+                extSequence[this.length + ext - 1] = this.sequence[shift + ext] + 1;
+    
+                for (int i = ext - 1; i > 0; i--) {
+                    extSequence[this.length + i - 1] = this.sequence[shift + i] + extSequence[this.length + i]/10;
+                    extSequence[this.length + i] = extSequence[this.length + i]%10;
                 }
-                else if (this.position.compareTo(extendedSequence.position) == 1) {
-                    this.position = extendedSequence.position;
-                    this.shift = extendedSequence.shift;
+    
+               extSequence[this.length + ext - 1] = extSequence[this.length + ext - 1]%10;
+    
+                StringSequence extendedSequence = new StringSequence(extSequence);
+    
+                if (extendedSequence.someSequence(step, shift + ext + 1) == true) {
+                    if (this.position == null) {
+                        this.position = extendedSequence.position;
+                        this.shift = extendedSequence.shift;
+                    }
+                    else if (this.position.compareTo(extendedSequence.position) == 1) {
+                        this.position = extendedSequence.position;
+                        this.shift = extendedSequence.shift;
+                    }
                 }
             }
         }

@@ -41,7 +41,7 @@ public class InfiniteSequence {
 
             StringSequence sequence = new StringSequence(src);
 
-            sequence.findPosition();
+         //   sequence.findPosition();
 
             BigInteger position = sequence.findPosition();
             
